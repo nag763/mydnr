@@ -20,7 +20,7 @@ The JSON input will be a list of the following dictionary :
                         "published": entry.published
 }
 
-For the JSON Input that will be provided, it shoud : 
+For the JSON Input that will be provided, it should : 
 
 * Provide a short and friendly summary at the begining of the email, telling what are the topics
 * Extract the relevant data from summary subdictionnaries
