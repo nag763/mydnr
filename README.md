@@ -14,24 +14,26 @@ The purpose of this project is to create an RSS news aggregator that summarizes 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/tech_news_aggregator.git
+    git clone https://github.com/nag763/rssfeedaggregator
     ```
 2. Navigate to the project directory:
     ```bash
-    cd tech_news_aggregator
+    cd rssfeedaggregator
     ```
 3. Install the required dependencies:
     ```bash
-    npm install
+    pip install
     ```
 
 ## Usage
 
-1. Start the application:
-    ```bash
-    npm start
-    ```
-2. Open your browser and go to `http://localhost:3000` to view the news summaries.
+```bash
+python main.py
+```
+
+## Architecture
+
+The Tech News Aggregator fetches RSS feeds from various news sites, aggregates news from the past day, and sends them to GPT-4.0 mini for summarization. The summarized news is then sent via email to the users.
 
 ## Contributing
 
