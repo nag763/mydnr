@@ -103,6 +103,7 @@ The output should be a plain HTML content with the following structure:
     * It should be structured with sections and sections title.
     * It should have a clear introduction and conclusion.
     * It should have a section after introduction with the key take aways.
+    * It should then have a main block with the content of the article shortened.
     * It should have a section with the opinion of the model.
     * It should have a section with recommendations for further reading.
     * It should have a section with the original article link that is provided in the input.
