@@ -29,6 +29,7 @@ For the JSON Input that will be provided, it should :
 * Asides of that, for the articles selected, it should provide a link to the original article
 * The output content should be a HTML, that should be readable on mobile phone format, if needed include a little of CSS styling
 * The spacing between headers and its content need to be sufficent enough for readings.
+* I also want the origin site of the article to appear within the title (ie for the title "The best article", the title should be "The best article (CNN)")
 
 Don't add extra tags in the response, I just want the content to be in HTML as it will be send by mail. I also do not want the markdown html blocks to appear in the response.
 """
