@@ -104,17 +104,19 @@ The output should be an HTML email with the following structure:
 - Within the main content, I would like to have an opinion of OpenAI about the topic covered, and possibly recommendations to read further. 
 """
 
+
 class Settings:
     """
     Application settings
     """
+
     def __init__(self):
         load_dotenv()
-        
-        self.rss_feeds : str = os.getenv("RSS_FEEDS")
-        self.api_key : str = os.getenv("API_KEY")
-        self.sender_mail : str = os.getenv("MAIL_FROM")
-        self.receiver_mail : str = os.getenv("MAIL_TO")
-        self.mail_server : str = os.getenv("MAIL_SERVER")
-        self.openai_plot_for_rss_recap : str = openai_plot_for_rss_recap
-        self.openai_plot_for_article_recap : str = openai_plot_for_article_recap
+
+        self.rss_feeds: str = os.getenv("RSS_FEEDS")
+        self.api_key: str = os.getenv("API_KEY")
+        self.sender_mail: str = os.getenv("MAIL_FROM")
+        self.receiver_mail: str = os.getenv("MAIL_TO")
+        self.mail_server: str = os.getenv("MAIL_SERVER")
+        self.openai_plot_for_rss_recap: str = openai_plot_for_rss_recap
+        self.openai_plot_for_article_recap: str = openai_plot_for_article_recap
