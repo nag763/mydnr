@@ -9,7 +9,7 @@ It actually helps me to win time by avoiding researchs on several blogs to get t
 There was also a learning purpose behind in getting to learn the Azure ecosystem, as well as getting to know OpenAI's API features and purposes.
 
 
-<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/master/.github/preview.png"></img></div>
+<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/preview.png"></img></div>
 
 
 ## Features
