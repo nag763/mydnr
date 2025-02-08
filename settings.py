@@ -103,6 +103,8 @@ The output should be a plain HTML content with the following structure:
 - The end of the article should include a link to the original article.
 - Within the main content, I would like to have an opinion of OpenAI about the topic covered, and possibly recommendations to read further. 
 - Do not include extra markdown tag, the output should be plain HTML, it will be shown as received to the user triggering the function.
+- The output should make a focus on being readable for a user on mobile phone, with dark mode styling being enabled.
+- The link to the article on the footer should never be modified to any other link than the original article link.
 """
 
 
