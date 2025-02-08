@@ -118,7 +118,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
         {"role": "user", "content": json.dumps(news_stack)},
     ])
     mail_content = response.choices[0].message.content
-    send_a_mail(sender_mail, receiver_mail, mail_server, subject=f"Today's {curr_date.day:02d}/{curr_date.month:02d} news", content=mail_content)
+    send_a_mail(sender_mail, receiver_mail, mail_server, subject=f"Today's {curr_date.day:02d}/{curr_date.month:02d} tech insights", content=mail_content)
     logging.info("RSS fetched, mail sent, exiting...")
 
 if __name__ == '__main__':
