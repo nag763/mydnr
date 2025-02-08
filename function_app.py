@@ -102,8 +102,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
                         "title": entry.title,
                         "link": entry.link,
                         "summary": entry.summary,
-                        "published": entry.published,
-                        "image": entry.image.url
+                        "published": entry.published
                     })
 
 
