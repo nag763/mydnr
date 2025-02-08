@@ -67,7 +67,10 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
         return -1
 
     rss_feeds = settings.rss_feeds.split(",")
+
     logging.debug(f"RSS feeds: {rss_feeds}")
+
+    root_function_url = f"{settings.function_url}?code={settings.function_key}&payload="
 
     for feed in rss_feeds:
         if feed:
@@ -81,9 +84,9 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
                             "link": entry.link,
                             "summary": entry.summary,
                             "published": entry.published,
-                            "payload": base64.urlsafe_b64encode(
+                            "recap_link": f"{root_function_url}{base64.urlsafe_b64encode(
                                 json.dumps({"feed": feed, "link": entry.link}).encode()
-                            ).decode(),
+                            ).decode()}",
                         }
                     )
 
@@ -122,7 +125,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
     logging.info("RSS fetched, mail sent, exiting...")
 
 
-@app.route(route="NewsRecap", auth_level=func.AuthLevel.FUNCTION)
+@app.route(route="NewsRecap", auth_level=func.AuthLevel.FUNCTION, methods=["GET"])
 def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
 
@@ -131,7 +134,7 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     payload_base64 = req.params.get("payload")
     if not payload_base64:
         logging.error("No payload provided, exiting")
-        return
+        return func.HttpResponse("No payload provided", status_code=400)
 
     payload = json.loads(base64.urlsafe_b64decode(payload_base64).decode())
 

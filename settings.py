@@ -14,7 +14,7 @@ The input will be a list of dictionaries, where each dictionary represents a new
 - "link": URL link to the article
 - "summary": Brief summary of the article
 - "published": Publication date
-- "link_base64": The link in base64 encoding
+- "recap_link": The link to an Azure function that will send a recap of the article in a separate mail
 
 ## JSON Output Structure
 
@@ -46,7 +46,7 @@ Here is a sample article template you can base yourself on :
 <h2>Article title (source site)</h2>
 <p>Article summary.</p>
 <a href="article_link">Text inviting to check the original article</a>
-<a href="payload">Send a recap in a separate mail</a>
+<a href="{recap_link}">Send a recap in a separate mail</a>
 ```
 
 ## Output Format
@@ -118,5 +118,7 @@ class Settings:
         self.sender_mail: str = os.getenv("MAIL_FROM")
         self.receiver_mail: str = os.getenv("MAIL_TO")
         self.mail_server: str = os.getenv("MAIL_SERVER")
+        self.function_url : str = os.getenv("FUNCTION_URL")
+        self.function_key : str = os.getenv("FUNCTION_KEY")
         self.openai_plot_for_rss_recap: str = openai_plot_for_rss_recap
         self.openai_plot_for_article_recap: str = openai_plot_for_article_recap
