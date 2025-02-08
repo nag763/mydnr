@@ -95,13 +95,14 @@ The input will be a JSON object with the following fields:
 
 ## Output
 
-The output should be an HTML content with the following structure:
+The output should be a plain HTML content with the following structure:
 
 - A header with the original article title.
 - The main article topics summarized in a brief introduction sentence.
 - The article content being summarized in a few paragraphs.
 - The end of the article should include a link to the original article.
 - Within the main content, I would like to have an opinion of OpenAI about the topic covered, and possibly recommendations to read further. 
+- Do not include extra markdown tag, the output should be plain HTML, it will be shown as received to the user triggering the function.
 """
 
 
