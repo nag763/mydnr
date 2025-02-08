@@ -4,6 +4,14 @@
 
 The purpose of this project is to create an RSS news aggregator that summarizes the latest tech news using GPT-4.0 mini. This tool collects news from various RSS feeds and provides concise summaries to keep you updated with the most important information in the tech world.
 
+It actually helps me to win time by avoiding researchs on several blogs to get the latest news, while having a summary per mail everyday is pretty handful.
+
+There was also a learning purpose behind in getting to learn the Azure ecosystem, as well as getting to know OpenAI's API features and purposes.
+
+
+<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/master/.github/preview.png"></img></div>
+
+
 ## Features
 
 - Aggregates news from multiple RSS feeds
@@ -31,9 +39,12 @@ The purpose of this project is to create an RSS news aggregator that summarizes 
 python main.py
 ```
 
-## Architecture
+## How it works
 
-The Tech News Aggregator fetches RSS feeds from various news sites, aggregates news from the past day, and sends them to GPT-4.0 mini for summarization. The summarized news is then sent via email to the users.
+1. The first step is basicly about fetching the RSS feeds in the `RSS_FEEDS` environment variable. These are CSV separated such as : `https://feedprovider1/rss,https://feedprovider2/rss`
+2. Once these feeds are aggregated into a JSON, this JSON is sent to OpenAI to have a summary generated given the plot.
+3. Given OpenAI's response, a mail will be sent to the mail precised in `MAIL_TO` environment variable.
+4. The mail is received by the recipient.
 
 ## Contributing
 
