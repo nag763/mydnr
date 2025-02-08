@@ -1,5 +1,7 @@
 # Tech News Aggregator
 
+<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/preview.png"></img></div>
+
 ## Purpose
 
 The purpose of this project is to create an RSS news aggregator that summarizes the latest tech news using GPT-4.0 mini. This tool collects news from various RSS feeds and provides concise summaries to keep you updated with the most important information in the tech world.
@@ -7,10 +9,6 @@ The purpose of this project is to create an RSS news aggregator that summarizes 
 It actually helps me to win time by avoiding researchs on several blogs to get the latest news, while having a summary per mail everyday is pretty handful.
 
 There was also a learning purpose behind in getting to learn the Azure ecosystem, as well as getting to know OpenAI's API features and purposes.
-
-
-<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/preview.png"></img></div>
-
 
 ## Features
 
