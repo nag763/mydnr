@@ -1,4 +1,4 @@
-name: Build and deploy Python project to Azure Function App - siliconfunc12
+name: Build and deploy Python project to Azure Function App
 
 on:
   push:
