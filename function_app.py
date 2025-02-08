@@ -147,7 +147,7 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
                     system_role=settings.openai_plot_for_article_recap,
                     user_content=entry.content[0].value,
                 )
-                return func.HttpResponse(openai_response, status_code=200)
+                return func.HttpResponse(openai_response, status_code=200, mimetype="text/html")
             except Exception as e:
                 logging.error(f"Error while reaching OpenAI : {e}")
                 return func.HttpResponse("Error while processing article", status_code=500)
