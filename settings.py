@@ -46,7 +46,7 @@ Here is a sample article template you can base yourself on :
 <h2>Article title (source site)</h2>
 <p>Article summary.</p>
 <a href="article_link">Text inviting to check the original article</a>
-<a href="{recap_link}">Send a recap in a separate mail</a>
+<a href="{recap_link}">Show me a longer recap</a>
 ```
 
 ## Output Format
