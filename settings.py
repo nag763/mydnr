@@ -97,14 +97,18 @@ The input will be a JSON object with the following fields:
 
 The output should be a plain HTML content with the following structure:
 
+
 - A header with the original article title.
-- The main article topics summarized in a brief introduction sentence.
-- The article content being summarized in a few paragraphs.
-- The end of the article should include a link to the original article.
-- Within the main content, I would like to have an opinion of OpenAI about the topic covered, and possibly recommendations to read further. 
+- The output should be structured in a way that the user can quickly grasp the main points of the article, whcih means :
+    * It should be structured with sections and sections title.
+    * It should have a clear introduction and conclusion.
+    * It should have a section after introduction with the key take aways.
+    * It should have a section with the opinion of the model.
+    * It should have a section with recommendations for further reading.
+    * It should have a section with the original article link that is provided in the input.
 - Do not include extra markdown tag, the output should be plain HTML, it will be shown as received to the user triggering the function.
 - The output should make a focus on being readable for a user on mobile phone, with dark mode styling being enabled.
-- The link to the article on the footer should never be modified to any other link than the original article link.
+- It should be readable in 3 to 5 minutes.
 """
 
 
