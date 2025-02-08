@@ -144,26 +144,12 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
             openai_response = call_chat_gpt_4o_mini(
                 settings.api_key,
                 system_role=settings.openai_plot_for_article_recap,
-                user_content=entry.content,
+                user_content=entry.content[0].value,
             )
-            send_a_mail(
-                settings.sender_mail,
-                settings.receiver_mail,
-                settings.mail_server,
-                subject=f"Recap of {entry.title}",
-                content=openai_response,
-            )
+            
+            return func.HttpResponse(openai_response, status_code=200)
 
-            return func.HttpResponse("Mail sent", status_code=200)
-
-    send_a_mail(
-        settings.sender_mail,
-        settings.receiver_mail,
-        settings.mail_server,
-        subject=f"The article wasn't found",
-        content="So bad, it seems like the article wasn't found",
-    )
-    return func.HttpResponse("No article found", status_code=204)
+    return func.HttpResponse("The article wasn't found", status_code=204)
 
 
 if __name__ == "__main__":

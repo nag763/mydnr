@@ -79,7 +79,7 @@ The output format will be a JSON dictionnary with the following fields:
 """
 
 openai_plot_for_article_recap = """
-I want a recap of the provided content in a structured HTML email format.
+I want a recap of the provided content in a structured HTML format.
 
 The recap shouldn't take more than 3 minutes to read and should be engaging and informative.
 
@@ -95,7 +95,7 @@ The input will be a JSON object with the following fields:
 
 ## Output
 
-The output should be an HTML email with the following structure:
+The output should be an HTML content with the following structure:
 
 - A header with the original article title.
 - The main article topics summarized in a brief introduction sentence.
