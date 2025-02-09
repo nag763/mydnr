@@ -38,11 +38,11 @@ The long recap is then returned as the response from the HTTP function. Alternat
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/nag763/rssfeedaggregator
+    git clone https://github.com/nag763/mydnr
     ```
 2. Navigate to the project directory:
     ```bash
-    cd rssfeedaggregator
+    cd mydnr
     ```
 3. Install the required dependencies:
     ```bash
