@@ -1,6 +1,6 @@
 # mydnr (My daily news recap)
 
-<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/preview.png"></img></div>
+<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/preview.webp"></img></div>
 
 ## Purpose
 
