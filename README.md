@@ -21,6 +21,19 @@ There was also a learning purpose behind in getting to learn the Azure ecosystem
 <div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/flow.svg"></img></div>
 
 
+* Blue: Represents the starting point and user interaction points.
+* Orange: Steps related to fetching and processing RSS feeds.
+* Green: Interactions with OpenAI for generating recaps and highlights.
+* Purple: Steps involving email and recap responses.
+* Gray: Represents static links to the original article.
+* Red: Highlights the HTTP-triggered function for generating a long recap.
+
+Every day at 6 AM, an Azure function is triggered to fetch content from a list of RSS feeds. It collects articles that were published the previous day, then sends this data to OpenAI's API to generate a short recap.
+
+Once the recap is generated, it is emailed to the client using Azure's mailing functionality. If the client is interested in a more detailed recap, they can request it by clicking a button. This action triggers an HTTP Azure function, which sends the full article to OpenAI for a longer recap and highlights.
+
+The long recap is then returned as the response from the HTTP function. Alternatively, if the client prefers, they can follow a link to the original article instead of receiving a recap.
+
 ## Installation
 
 1. Clone the repository:

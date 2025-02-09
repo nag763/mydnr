@@ -1,0 +1,27 @@
+digraph ProjectArchitecture {
+    rankdir=LR;
+    node [shape=box, style=filled, fontcolor=white];
+
+    // Nodes with colors
+    Start [label="Start: Scheduled Azure Function (6 AM)", shape=ellipse, color=blue, style="filled,bold"];
+    RSSFeeds [label="Fetch RSS Feeds", color=orange];
+    CheckArticles [label="Get articles from previous day", color=orange];
+    OpenAIRecap [label="Send content to OpenAI API (short recap)", color=green];
+    SendEmail [label="Send email with short recap\n(Azure Email Service)", color=purple];
+    ClientInteraction [label="Client Interaction", shape=ellipse, color=blue, style="filled,bold"];
+    HTTPTrigger [label="HTTP Trigger: Request long recap", color=red];
+    OpenAIHighlight [label="OpenAI API: Generate long recap & highlights", color=green];
+    ReturnResponse [label="Return long recap", color=purple];
+    OriginalLink [label="Link to original article", color=gray, fontcolor=black];
+
+    // Connections with labels
+    Start -> RSSFeeds [color=black];
+    RSSFeeds -> CheckArticles [color=black];
+    CheckArticles -> OpenAIRecap [color=black];
+    OpenAIRecap -> SendEmail [color=black];
+    SendEmail -> ClientInteraction [color=black];
+    ClientInteraction -> HTTPTrigger [label="Request long recap", color=red];
+    ClientInteraction -> OriginalLink [label="Open original article", color=gray];
+    HTTPTrigger -> OpenAIHighlight [color=red];
+    OpenAIHighlight -> ReturnResponse [color=purple];
+}
