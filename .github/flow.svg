@@ -1,0 +1,123 @@
+<svg width="426pt" height="649pt" viewBox="0.00 0.00 425.91 649.40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 645.4)">
+<title>ProjectArchitecture</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-645.4 421.91,-645.4 421.91,4 -4,4"/>
+<!-- Start -->
+<g id="node1" class="node">
+<title>Start</title>
+<ellipse fill="blue" stroke="blue" stroke-width="2" cx="238.58" cy="-623.4" rx="169" ry="18"/>
+<text text-anchor="middle" x="238.58" y="-619.2" font-family="Times,serif" font-size="14.00" fill="white">Start: Scheduled Azure Function (6 AM)</text>
+</g>
+<!-- RSSFeeds -->
+<g id="node2" class="node">
+<title>RSSFeeds</title>
+<polygon fill="orange" stroke="orange" points="294.41,-568.4 182.74,-568.4 182.74,-532.4 294.41,-532.4 294.41,-568.4"/>
+<text text-anchor="middle" x="238.58" y="-546.2" font-family="Times,serif" font-size="14.00" fill="white">Fetch RSS Feeds</text>
+</g>
+<!-- Start&#45;&gt;RSSFeeds -->
+<g id="edge1" class="edge">
+<title>Start-&gt;RSSFeeds</title>
+<path fill="none" stroke="black" d="M238.58,-605.21C238.58,-597.63 238.58,-588.5 238.58,-579.94"/>
+<polygon fill="black" stroke="black" points="242.08,-579.94 238.58,-569.94 235.08,-579.94 242.08,-579.94"/>
+</g>
+<!-- CheckArticles -->
+<g id="node3" class="node">
+<title>CheckArticles</title>
+<polygon fill="orange" stroke="orange" points="331.71,-495.4 145.44,-495.4 145.44,-459.4 331.71,-459.4 331.71,-495.4"/>
+<text text-anchor="middle" x="238.58" y="-473.2" font-family="Times,serif" font-size="14.00" fill="white">Get articles from previous day</text>
+</g>
+<!-- RSSFeeds&#45;&gt;CheckArticles -->
+<g id="edge2" class="edge">
+<title>RSSFeeds-&gt;CheckArticles</title>
+<path fill="none" stroke="black" d="M238.58,-532.21C238.58,-524.63 238.58,-515.5 238.58,-506.94"/>
+<polygon fill="black" stroke="black" points="242.08,-506.94 238.58,-496.94 235.08,-506.94 242.08,-506.94"/>
+</g>
+<!-- OpenAIRecap -->
+<g id="node4" class="node">
+<title>OpenAIRecap</title>
+<polygon fill="green" stroke="green" points="364.77,-422.4 112.39,-422.4 112.39,-386.4 364.77,-386.4 364.77,-422.4"/>
+<text text-anchor="middle" x="238.58" y="-400.2" font-family="Times,serif" font-size="14.00" fill="white">Send content to OpenAI API (short recap)</text>
+</g>
+<!-- CheckArticles&#45;&gt;OpenAIRecap -->
+<g id="edge3" class="edge">
+<title>CheckArticles-&gt;OpenAIRecap</title>
+<path fill="none" stroke="black" d="M238.58,-459.21C238.58,-451.63 238.58,-442.5 238.58,-433.94"/>
+<polygon fill="black" stroke="black" points="242.08,-433.94 238.58,-423.94 235.08,-433.94 242.08,-433.94"/>
+</g>
+<!-- SendEmail -->
+<g id="node5" class="node">
+<title>SendEmail</title>
+<polygon fill="purple" stroke="purple" points="324.72,-349.4 152.43,-349.4 152.43,-307.8 324.72,-307.8 324.72,-349.4"/>
+<text text-anchor="middle" x="238.58" y="-332.8" font-family="Times,serif" font-size="14.00" fill="white">Send email with short recap</text>
+<text text-anchor="middle" x="238.58" y="-316" font-family="Times,serif" font-size="14.00" fill="white">(Azure Email Service)</text>
+</g>
+<!-- OpenAIRecap&#45;&gt;SendEmail -->
+<g id="edge4" class="edge">
+<title>OpenAIRecap-&gt;SendEmail</title>
+<path fill="none" stroke="black" d="M238.58,-385.91C238.58,-378.55 238.58,-369.75 238.58,-361.32"/>
+<polygon fill="black" stroke="black" points="242.08,-361.35 238.58,-351.35 235.08,-361.35 242.08,-361.35"/>
+</g>
+<!-- ClientInteraction -->
+<g id="node6" class="node">
+<title>ClientInteraction</title>
+<ellipse fill="blue" stroke="blue" stroke-width="2" cx="238.58" cy="-252.8" rx="78.88" ry="18"/>
+<text text-anchor="middle" x="238.58" y="-248.6" font-family="Times,serif" font-size="14.00" fill="white">Client Interaction</text>
+</g>
+<!-- SendEmail&#45;&gt;ClientInteraction -->
+<g id="edge5" class="edge">
+<title>SendEmail-&gt;ClientInteraction</title>
+<path fill="none" stroke="black" d="M238.58,-307.43C238.58,-299.66 238.58,-290.63 238.58,-282.22"/>
+<polygon fill="black" stroke="black" points="242.08,-282.45 238.58,-272.45 235.08,-282.45 242.08,-282.45"/>
+</g>
+<!-- HTTPTrigger -->
+<g id="node7" class="node">
+<title>HTTPTrigger</title>
+<polygon fill="red" stroke="red" points="246.16,-182 34.99,-182 34.99,-146 246.16,-146 246.16,-182"/>
+<text text-anchor="middle" x="140.58" y="-159.8" font-family="Times,serif" font-size="14.00" fill="white">HTTP Trigger: Request long recap</text>
+</g>
+<!-- ClientInteraction&#45;&gt;HTTPTrigger -->
+<g id="edge6" class="edge">
+<title>ClientInteraction-&gt;HTTPTrigger</title>
+<path fill="none" stroke="red" d="M202.16,-236.51C192.1,-231.21 181.66,-224.6 173.28,-216.8 165.86,-209.89 159.44,-200.96 154.29,-192.45"/>
+<polygon fill="red" stroke="red" points="157.37,-190.78 149.42,-183.78 151.27,-194.21 157.37,-190.78"/>
+<text text-anchor="middle" x="226.93" y="-204.2" font-family="Times,serif" font-size="14.00">Request long recap</text>
+</g>
+<!-- OriginalLink -->
+<g id="node10" class="node">
+<title>OriginalLink</title>
+<polygon fill="gray" stroke="gray" points="406.75,-182 264.4,-182 264.4,-146 406.75,-146 406.75,-182"/>
+<text text-anchor="middle" x="335.58" y="-159.8" font-family="Times,serif" font-size="14.00">Link to original article</text>
+</g>
+<!-- ClientInteraction&#45;&gt;OriginalLink -->
+<g id="edge7" class="edge">
+<title>ClientInteraction-&gt;OriginalLink</title>
+<path fill="none" stroke="gray" d="M261.55,-235.33C269.07,-229.68 277.35,-223.17 284.58,-216.8 293.81,-208.67 303.41,-199.22 311.76,-190.63"/>
+<polygon fill="gray" stroke="gray" points="314.19,-193.15 318.58,-183.51 309.13,-188.31 314.19,-193.15"/>
+<text text-anchor="middle" x="359.99" y="-204.2" font-family="Times,serif" font-size="14.00">Open original article</text>
+</g>
+<!-- OpenAIHighlight -->
+<g id="node8" class="node">
+<title>OpenAIHighlight</title>
+<polygon fill="green" stroke="green" points="281.15,-109 0,-109 0,-73 281.15,-73 281.15,-109"/>
+<text text-anchor="middle" x="140.58" y="-86.8" font-family="Times,serif" font-size="14.00" fill="white">OpenAI API: Generate long recap &amp; highlights</text>
+</g>
+<!-- HTTPTrigger&#45;&gt;OpenAIHighlight -->
+<g id="edge8" class="edge">
+<title>HTTPTrigger-&gt;OpenAIHighlight</title>
+<path fill="none" stroke="red" d="M140.58,-145.81C140.58,-138.23 140.58,-129.1 140.58,-120.54"/>
+<polygon fill="red" stroke="red" points="144.08,-120.54 140.58,-110.54 137.08,-120.54 144.08,-120.54"/>
+</g>
+<!-- ReturnResponse -->
+<g id="node9" class="node">
+<title>ReturnResponse</title>
+<polygon fill="purple" stroke="purple" points="198.72,-36 82.43,-36 82.43,0 198.72,0 198.72,-36"/>
+<text text-anchor="middle" x="140.58" y="-13.8" font-family="Times,serif" font-size="14.00" fill="white">Return long recap</text>
+</g>
+<!-- OpenAIHighlight&#45;&gt;ReturnResponse -->
+<g id="edge9" class="edge">
+<title>OpenAIHighlight-&gt;ReturnResponse</title>
+<path fill="none" stroke="purple" d="M140.58,-72.81C140.58,-65.23 140.58,-56.1 140.58,-47.54"/>
+<polygon fill="purple" stroke="purple" points="144.08,-47.54 140.58,-37.54 137.08,-47.54 144.08,-47.54"/>
+</g>
+</g>
+</svg>

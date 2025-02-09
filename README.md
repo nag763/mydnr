@@ -16,6 +16,11 @@ There was also a learning purpose behind in getting to learn the Azure ecosystem
 - Uses GPT-4.0 mini to generate summaries
 - Provides a user-friendly interface to browse news
 
+## Flow
+
+<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/flow.svg"></img></div>
+
+
 ## Installation
 
 1. Clone the repository:
