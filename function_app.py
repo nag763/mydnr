@@ -14,7 +14,7 @@ from settings import Settings
 app = func.FunctionApp()
 
 def error_handler(func): 
-    '''Decorator that reports the execution time.'''
+    '''Decorator that wraps and catch exceptions priting them into apps insights.'''
   
     def wrap(*args, **kwargs): 
         try:
@@ -66,10 +66,10 @@ def send_a_mail(
     logging.info("Message sent: ", result)
 
 
+@error_handler
 @app.timer_trigger(
     schedule="0 0 6 * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False
 )
-@error_handler
 def NewsAggregator(myTimer: func.TimerRequest) -> None:
     settings = Settings()
 
@@ -146,8 +146,8 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
     logging.info("RSS fetched, mail sent, exiting...")
 
 
-@app.route(route="NewsRecap", auth_level=func.AuthLevel.FUNCTION, methods=["GET"])
 @error_handler
+@app.route(route="NewsRecap", auth_level=func.AuthLevel.FUNCTION, methods=["GET"])
 def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
 
