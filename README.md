@@ -18,7 +18,31 @@ There was also a learning purpose behind in getting to learn the Azure ecosystem
 
 ## Flow
 
-<div align="center"><img src="https://raw.githubusercontent.com/nag763/rssfeedaggregator/refs/heads/master/.github/flow.svg"></img></div>
+```mermaid
+graph TB
+    style Start fill:#0000FF,stroke:#0000FF,stroke-width:2px
+    style RSSFeeds fill:#FFA500
+    style CheckArticles fill:#FFA500
+    style OpenAIRecap fill:#008000
+    style SendEmail fill:#800080
+    style ClientInteraction fill:#0000FF,stroke:#0000FF,stroke-width:2px
+    style HTTPTrigger fill:#FF0000
+    style OpenAIHighlight fill:#008000
+    style ReturnResponse fill:#800080
+    style OriginalLink fill:#808080,stroke:#000000
+
+    Start("Start: Scheduled Azure Function (6 AM)") --> RSSFeeds("Fetch RSS Feeds")
+    RSSFeeds --> CheckArticles("Get articles from previous day")
+    CheckArticles --> OpenAIRecap("Send content to OpenAI API (short recap)")
+    OpenAIRecap --> SendEmail("Send email with short recap\n(Azure Email Service)")
+    SendEmail --> ClientInteraction("Client Interaction")
+    ClientInteraction --> HTTPTrigger("HTTP Trigger: Request long recap")
+    ClientInteraction --> OriginalLink("Link to original article")
+    HTTPTrigger --> OpenAIHighlight("OpenAI API: Generate long recap & highlights")
+    OpenAIHighlight --> ReturnResponse("Return long recap")
+
+
+```
 
 
 * Blue: Represents the starting point and user interaction points.
