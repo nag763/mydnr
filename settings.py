@@ -1,4 +1,7 @@
 import os
+from azure.keyvault.secrets import SecretClient
+from azure.identity import DefaultAzureCredential
+
 
 from dotenv import load_dotenv
 
@@ -120,13 +123,19 @@ class Settings:
 
     def __init__(self):
         load_dotenv()
+        
+        key_vault = os.getenv("KEY_VAULT")
+        key_vault_uri = f"https://{key_vault}.vault.azure.net"
+        credential = DefaultAzureCredential()
+        client = SecretClient(vault_url=key_vault_uri, credential=credential)
+        
 
         self.rss_feeds: str = os.getenv("RSS_FEEDS")
-        self.api_key: str = os.getenv("API_KEY")
-        self.sender_mail: str = os.getenv("MAIL_FROM")
+        self.open_ai_api_key: str = client.get_secret("OPEN-AI-API-KEY").value
+        self.sender_mail: str = client.get_secret("MAIL-FROM").value
         self.receiver_mail: str = os.getenv("MAIL_TO")
-        self.mail_server: str = os.getenv("MAIL_SERVER")
+        self.mail_server: str = client.get_secret("MAIL-SERVER").value
         self.function_url : str = os.getenv("FUNCTION_URL")
-        self.function_key : str = os.getenv("FUNCTION_KEY")
+        self.function_key : str = client.get_secret("FUNCTION-KEY").value
         self.openai_plot_for_rss_recap: str = openai_plot_for_rss_recap
         self.openai_plot_for_article_recap: str = openai_plot_for_article_recap

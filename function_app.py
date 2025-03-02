@@ -64,7 +64,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
             logging.error("No RSS feed defined, exiting")
             return -1
 
-        if not settings.api_key:
+        if not settings.open_ai_api_key:
             logging.error("No API key defined, exiting")
             return -1
 
@@ -106,7 +106,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
         chatgpt_user_content = json.dumps(news_stack)
 
         openai_response = call_chat_gpt_4o_mini(
-            settings.api_key,
+            settings.open_ai_api_key,
             system_role=settings.openai_plot_for_rss_recap,
             user_content=chatgpt_user_content,
         )
@@ -153,7 +153,7 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
         if entry.link == payload["link"]:
             try:
                 openai_response = call_chat_gpt_4o_mini(
-                    settings.api_key,
+                    settings.open_ai_api_key,
                     system_role=settings.openai_plot_for_article_recap,
                     user_content=entry.content[0].value,
                 )
