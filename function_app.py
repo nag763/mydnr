@@ -72,10 +72,6 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
 
         logging.debug(f"RSS feeds: {rss_feeds}")
 
-        root_function_url = (
-            f"{settings.function_url}?code={settings.function_key}&payload="
-        )
-
         for feed in rss_feeds:
             if feed:
                 logging.info(f"Processing feed {feed}")
@@ -88,9 +84,9 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
                                 "link": entry.link,
                                 "summary": entry.summary,
                                 "published": entry.published,
-                                "recap_link": f"{root_function_url}{base64.urlsafe_b64encode(
+                                "recap_link": f"{settings.function_url}?payload={base64.urlsafe_b64encode(
                                     json.dumps({"feed": feed, "link": entry.link}).encode()
-                                ).decode()}",
+                                ).decode()}&code={settings.function_key}",
                             }
                         )
 
