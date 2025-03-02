@@ -13,6 +13,27 @@ from settings import Settings
 
 app = func.FunctionApp()
 
+def error_handler(func): 
+    '''Decorator that reports the execution time.'''
+  
+    def wrap(*args, **kwargs): 
+        try:
+            result = func(*args, **kwargs) 
+        except Exception as e:
+            logging.error(f"An error has been met while executing {func.__name__}", e)
+            logging.error(traceback.format_exc())
+            settings = Settings()
+            send_a_mail(
+                settings.sender_mail,
+                settings.receiver_mail,
+                settings.mail_server,
+                subject="Error met while attempting to fetch today news",
+                content=traceback.format_exc(),
+            )
+            return 1
+        return result
+    return wrap 
+  
 
 def call_chat_gpt_4o_mini(api_key: str, system_role: str, user_content: str):
     client = OpenAI(api_key=api_key)
@@ -48,94 +69,85 @@ def send_a_mail(
 @app.timer_trigger(
     schedule="0 0 6 * * *", arg_name="myTimer", run_on_startup=False, use_monitor=False
 )
+@error_handler
 def NewsAggregator(myTimer: func.TimerRequest) -> None:
-    try:
-        settings = Settings()
+    settings = Settings()
 
-        curr_date = datetime.now()
+    curr_date = datetime.now()
 
-        # Stores the previous day number
-        yesterday_date = curr_date - timedelta(1)
-        yesterday_date_number = yesterday_date.day
+    # Stores the previous day number
+    yesterday_date = curr_date - timedelta(1)
+    yesterday_date_number = yesterday_date.day
 
-        news_stack = []
+    news_stack = []
 
-        if not settings.rss_feeds:
-            logging.error("No RSS feed defined, exiting")
-            return -1
+    if not settings.rss_feeds:
+        logging.error("No RSS feed defined, exiting")
+        return -1
 
-        if not settings.open_ai_api_key:
-            logging.error("No API key defined, exiting")
-            return -1
+    if not settings.open_ai_api_key:
+        logging.error("No API key defined, exiting")
+        return -1
 
-        rss_feeds = settings.rss_feeds.split(",")
+    rss_feeds = settings.rss_feeds.split(",")
 
-        logging.debug(f"RSS feeds: {rss_feeds}")
+    logging.debug(f"RSS feeds: {rss_feeds}")
 
-        for feed in rss_feeds:
-            if feed:
-                logging.info(f"Processing feed {feed}")
-                parsed_feed = feedparser.parse(feed)
-                for entry in parsed_feed.entries:
-                    if entry.published_parsed.tm_mday == yesterday_date_number:
-                        news_stack.append(
-                            {
-                                "title": entry.title,
-                                "link": entry.link,
-                                "summary": entry.summary,
-                                "published": entry.published,
-                                "recap_link": f"{settings.function_url}?payload={base64.urlsafe_b64encode(
-                                    json.dumps({"feed": feed, "link": entry.link}).encode()
-                                ).decode()}&code={settings.function_key}",
-                            }
-                        )
+    for feed in rss_feeds:
+        if feed:
+            logging.info(f"Processing feed {feed}")
+            parsed_feed = feedparser.parse(feed)
+            for entry in parsed_feed.entries:
+                if entry.published_parsed.tm_mday == yesterday_date_number:
+                    news_stack.append(
+                        {
+                            "title": entry.title,
+                            "link": entry.link,
+                            "summary": entry.summary,
+                            "published": entry.published,
+                            "recap_link": f"{settings.function_url}?payload={base64.urlsafe_b64encode(
+                                json.dumps({"feed": feed, "link": entry.link}).encode()
+                            ).decode()}&code={settings.function_key}",
+                        }
+                    )
 
-        if not news_stack:
-            logging.warning("No news found yesterday, so bad!")
-            send_a_mail(
-                settings.sender_mail,
-                settings.receiver_mail,
-                settings.mail_server,
-                subject=f"Today's {curr_date.day}/{curr_date.month} news (nothing)",
-                content="Seems like there is nothing to report today",
-            )
-            return
-
-        logging.info(f"Found {len(news_stack)} news articles")
-
-        chatgpt_user_content = json.dumps(news_stack)
-
-        openai_response = call_chat_gpt_4o_mini(
-            settings.open_ai_api_key,
-            system_role=settings.openai_plot_for_rss_recap,
-            user_content=chatgpt_user_content,
-        )
-
-        openai_response_parsed = json.loads(openai_response)
-
-        logging.info(f"Response received from OpenAI : {openai_response_parsed}")
-
+    if not news_stack:
+        logging.warning("No news found yesterday, so bad!")
         send_a_mail(
             settings.sender_mail,
             settings.receiver_mail,
             settings.mail_server,
-            subject=f"Today's {curr_date.day:02d}/{curr_date.month:02d} tech insights : {openai_response_parsed["mailTitle"]}",
-            content=openai_response_parsed["mailContent"],
+            subject=f"Today's {curr_date.day}/{curr_date.month} news (nothing)",
+            content="Seems like there is nothing to report today",
         )
-        logging.info("RSS fetched, mail sent, exiting...")
-    except Exception as e:
-        logging.error("An error has been met while aggregating the news", e)
-        send_a_mail(
-            settings.sender_mail,
-            settings.receiver_mail,
-            settings.mail_server,
-            subject="Error met while attempting to fetch today news",
-            content=traceback.format_exc(),
-        )
-        return 1
+        return
+
+    logging.info(f"Found {len(news_stack)} news articles")
+
+    chatgpt_user_content = json.dumps(news_stack)
+
+    openai_response = call_chat_gpt_4o_mini(
+        settings.open_ai_api_key,
+        system_role=settings.openai_plot_for_rss_recap,
+        user_content=chatgpt_user_content,
+    )
+
+    openai_response_parsed = json.loads(openai_response)
+
+    logging.info(f"Response received from OpenAI : {openai_response_parsed}")
+
+    send_a_mail(
+        settings.sender_mail,
+        settings.receiver_mail,
+        settings.mail_server,
+        subject=f"Today's {curr_date.day:02d}/{curr_date.month:02d} tech insights : {openai_response_parsed["mailTitle"]}",
+        content=openai_response_parsed["mailContent"],
+    )
+    logging.info("RSS fetched, mail sent, exiting...")
 
 
 @app.route(route="NewsRecap", auth_level=func.AuthLevel.FUNCTION, methods=["GET"])
+@error_handler
 def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("Python HTTP trigger function processed a request.")
 
