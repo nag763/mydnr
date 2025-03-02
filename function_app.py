@@ -30,7 +30,9 @@ def error_handler(func):
                 subject="Error met while attempting to fetch today news",
                 content=traceback.format_exc(),
             )
-            return 1
+            return func.HttpResponse(
+                    "An unrecoverable error has been met", status_code=500
+            )
         return result
     return wrap 
   
@@ -163,20 +165,15 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     parsed_feed = feedparser.parse(payload["feed"])
     for entry in parsed_feed.entries:
         if entry.link == payload["link"]:
-            try:
-                openai_response = call_chat_gpt_4o_mini(
-                    settings.open_ai_api_key,
-                    system_role=settings.openai_plot_for_article_recap,
-                    user_content=entry.content[0].value,
-                )
-                return func.HttpResponse(
-                    openai_response, status_code=200, mimetype="text/html"
-                )
-            except Exception as e:
-                logging.error(f"Error while reaching OpenAI : {e}")
-                return func.HttpResponse(
-                    "Error while processing article", status_code=500
-                )
+            openai_response = call_chat_gpt_4o_mini(
+                settings.open_ai_api_key,
+                system_role=settings.openai_plot_for_article_recap,
+                user_content=entry.content[0].value,
+            )
+            return func.HttpResponse(
+                openai_response, status_code=200, mimetype="text/html"
+            )
+                
 
     return func.HttpResponse("The article wasn't found", status_code=204)
 
