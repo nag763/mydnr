@@ -20,7 +20,7 @@ def error_handler(func):
         try:
             result = func(*args, **kwargs) 
         except Exception as e:
-            logging.error(f"An error has been met while executing {func.__name__}", e)
+            logging.error("An error has been met while executing function", e)
             logging.error(traceback.format_exc())
             settings = Settings()
             send_a_mail(
