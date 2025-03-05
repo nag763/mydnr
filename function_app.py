@@ -5,7 +5,7 @@ import logging
 import feedparser
 import base64
 from datetime import datetime, timedelta
-from openai import OpenAI
+from openai import AzureOpenAI
 from azure.communication.email import EmailClient
 import traceback
 
@@ -13,12 +13,12 @@ from settings import Settings
 
 app = func.FunctionApp()
 
-def error_handler(func): 
+def error_handler(fun): 
     '''Decorator that wraps and catch exceptions priting them into apps insights.'''
   
     def wrap(*args, **kwargs): 
         try:
-            result = func(*args, **kwargs) 
+            result = fun(*args, **kwargs) 
         except Exception as e:
             logging.error("An error has been met while executing function", e)
             logging.error(traceback.format_exc())
@@ -37,8 +37,8 @@ def error_handler(func):
     return wrap 
   
 
-def call_chat_gpt_4o_mini(api_key: str, system_role: str, user_content: str):
-    client = OpenAI(api_key=api_key)
+def call_chat_gpt_4o_mini(endpoint:str, api_key: str, system_role: str, user_content: str):
+    client = AzureOpenAI(api_key=api_key, azure_endpoint=endpoint, api_version="2024-02-01")
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -100,7 +100,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
             logging.info(f"Processing feed {feed}")
             parsed_feed = feedparser.parse(feed)
             for entry in parsed_feed.entries:
-                if entry.published_parsed.tm_mday == yesterday_date_number:
+                if hasattr(entry, 'published_parsed') and entry.published_parsed.tm_mday == yesterday_date_number:
                     news_stack.append(
                         {
                             "title": entry.title,
@@ -129,6 +129,7 @@ def NewsAggregator(myTimer: func.TimerRequest) -> None:
     chatgpt_user_content = json.dumps(news_stack)
 
     openai_response = call_chat_gpt_4o_mini(
+        settings.azure_endpoint,
         settings.open_ai_api_key,
         system_role=settings.openai_plot_for_rss_recap,
         user_content=chatgpt_user_content,
@@ -166,6 +167,7 @@ def NewsRecap(req: func.HttpRequest) -> func.HttpResponse:
     for entry in parsed_feed.entries:
         if entry.link == payload["link"]:
             openai_response = call_chat_gpt_4o_mini(
+                settings.azure_endpoint,
                 settings.open_ai_api_key,
                 system_role=settings.openai_plot_for_article_recap,
                 user_content=entry.content[0].value,
