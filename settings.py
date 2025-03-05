@@ -130,6 +130,7 @@ class Settings:
         client = SecretClient(vault_url=key_vault_uri, credential=credential)
         
 
+        self.azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
         self.rss_feeds: str = os.getenv("RSS_FEEDS")
         self.open_ai_api_key: str = client.get_secret("OPEN-AI-API-KEY").value
         self.sender_mail: str = client.get_secret("MAIL-FROM").value
