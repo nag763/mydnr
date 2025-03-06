@@ -135,7 +135,7 @@ class Settings:
         self.sender_mail: str = client.get_secret("MAIL-FROM").value
         self.receiver_mail: str = os.getenv("MAIL_TO")
         self.mail_server: str = client.get_secret("MAIL-SERVER").value
-        self.function_url : str = os.getenv("FUNCTION_URL")
+        self.function_url : str =  f'https://{os.getenv("WEBSITE_HOSTNAME")}/api/NewsRecap'
         self.function_key : str = client.get_secret("FUNCTION-KEY").value
         self.openai_plot_for_rss_recap: str = openai_plot_for_rss_recap
         self.openai_plot_for_article_recap: str = openai_plot_for_article_recap
