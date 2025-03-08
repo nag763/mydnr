@@ -2,5 +2,13 @@
 .env
 .github
 README.md
+INSTALL.md
 __pycache__
 .vscode
+
+# Terraform files
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+main.tf
+.terraform
