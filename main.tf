@@ -27,7 +27,6 @@ variable "subscription_id" {
   type        = string
 }
 
-
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {
@@ -169,8 +168,8 @@ resource "azurerm_cognitive_deployment" "mydnr" {
   }
 
   sku {
-    name = "GlobalStandard"
-    capacity = 9
+    name = "DataZoneStandard"
+    capacity = 10
   }
 
 }
